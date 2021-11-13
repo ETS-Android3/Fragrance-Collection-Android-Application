@@ -8,8 +8,7 @@
     android:paddingBottom="20dp"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
-    android:paddingTop="20dp"
-    tools:context=".RegisterActivity">
+    android:paddingTop="20dp">
 
     <ScrollView
         android:id="@+id/registerScrollView"
@@ -21,76 +20,88 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                app:srcCompat="@drawable/logo" />
-
-            <EditText
-                android:id="@+id/registerNameEditText"
+            <TextView
+                android:id="@+id/addFragranceTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/add_fragrance"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/addFragranceNameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:ems="10"
                 android:hint="@string/hint_name"
-                android:inputType="textEmailAddress"
+                android:inputType="text"
                 android:maxLines="1"
                 android:minHeight="48dp"
                 android:textColor="@android:color/white" />
 
             <EditText
-                android:id="@+id/registerEmailEditText"
+                android:id="@+id/addFragrancePerfumerEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:ems="10"
-                android:hint="@string/hint_email"
-                android:inputType="textEmailAddress"
+                android:hint="@string/hint_perfumer"
+                android:inputType="text"
                 android:maxLines="1"
                 android:minHeight="48dp"
                 android:textColor="@android:color/white" />
 
             <EditText
-                android:id="@+id/registerPasswordEditText"
+                android:id="@+id/addFragranceReleaseYearEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:ems="10"
-                android:hint="@string/hint_password"
+                android:hint="@string/hint_release_year"
+                android:inputType="number"
+                android:maxLines="1"
+                android:minHeight="48dp"
+                android:textColor="@android:color/white" />
+
+            <EditText
+                android:id="@+id/addFragranceNotesEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:hint="@string/hint_notes"
                 android:inputType="textPassword"
-                android:minHeight="48dp"
                 android:maxLines="1"
+                android:minHeight="48dp"
                 android:textColor="@android:color/white" />
 
-            <EditText
-                android:id="@+id/registerConfirmPasswordEditText"
+            <TextView
+                android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:ems="10"
-                android:hint="@string/hint_confirm_password"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:minHeight="48dp"
-                android:textColor="@android:color/white" />
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="Choose Image" />
+
+            <ImageButton
+                android:id="@+id/addFragranceChooseImageButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_baseline_image_24" />
 
             <Button
-                android:id="@+id/registerButton"
+                android:id="@+id/addFragranceButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:background="@color/colorPrimary"
-                android:text="@string/text_register" />
+                android:text="@string/add_fragrance" />
 
-            <TextView
-                android:id="@+id/redirectToLoginTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:text="@string/text_already_member"
-                android:textSize="16sp" />
         </LinearLayout>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

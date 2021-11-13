@@ -26,6 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_FRAGRANCE_RELEASE_YEAR = "release_year";
     private static final String COLUMN_FRAGRANCE_NOTES = "notes";
     private static final String COLUMN_FRAGRANCE_IMAGE = "image";
+    private int currentLoggedUserId = -1;
 
 
 
@@ -106,12 +107,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 null, null, null);
 
         int cursorCount = cursor.getCount();
+
+        if (cursorCount > 0) {
+            cursor.moveToNext();
+            currentLoggedUserId = cursor.getInt(0);
+            cursor.close();
+            db.close();
+            return true;
+        }
+
         cursor.close();
         db.close();
-
-        if (cursorCount > 0)
-            return true;
-
         return false;
     }
 }

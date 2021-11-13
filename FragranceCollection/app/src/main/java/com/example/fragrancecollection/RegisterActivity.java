@@ -2,6 +2,7 @@ package com.example.fragrancecollection;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -34,7 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
         registerNameEditText = findViewById(R.id.registerNameEditText);
         registerEmailEditText = findViewById(R.id.registerEmailEditText);
         registerPasswordEditText = findViewById(R.id.registerPasswordEditText);
-        registerConfirmPasswordEditText = findViewById(R.id.registerConfirmEditText);
+        registerConfirmPasswordEditText = findViewById(R.id.registerConfirmPasswordEditText);
         registerButton = findViewById(R.id.registerButton);
         redirectToLoginTextView = findViewById(R.id.redirectToLoginTextView);
 
@@ -74,8 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                 if (!databaseHelper.checkUserExists(emailValue)) {
-                    user = new User(registerNameEditText.getText().toString(), registerEmailEditText.getText().toString(),
-                            registerPasswordEditText.getText().toString());
+                    user = new User(nameValue, emailValue, passwordValue);
 
                     databaseHelper.addUser(user);
                     clearRegistrationForm();
@@ -83,6 +83,13 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 else
                     Snackbar.make(registerScrollView, getString(R.string.error_email_exists), Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+        redirectToLoginTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             }
         });
     }

@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                     loginPasswordEditText.setError("Enter a password");
 
                 if (databaseHelper.checkUserExists(emailValue, passwordValue))
-                    startActivity(new Intent(LoginActivity.this, FragranceListActivity.class));
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
                 else
                     Snackbar.make(loginScrollView, getString(R.string.error_valid_email_password), Snackbar.LENGTH_LONG).show();
