@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
@@ -26,7 +28,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_FRAGRANCE_RELEASE_YEAR = "release_year";
     private static final String COLUMN_FRAGRANCE_NOTES = "notes";
     private static final String COLUMN_FRAGRANCE_IMAGE = "image";
-    private int currentLoggedUserId = -1;
 
 
 
@@ -41,7 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             COLUMN_FRAGRANCE_USERID + " INTEGER," +
             COLUMN_FRAGRANCE_NAME + " TEXT," +
             COLUMN_FRAGRANCE_PERFUMER + " TEXT," +
-            COLUMN_FRAGRANCE_RELEASE_YEAR + " TEXT," +
+            COLUMN_FRAGRANCE_RELEASE_YEAR + " INTEGER," +
             COLUMN_FRAGRANCE_NOTES + " TEXT," +
             COLUMN_FRAGRANCE_IMAGE + " BLOB, " +
             "FOREIGN KEY(" + COLUMN_FRAGRANCE_USERID + ") REFERENCES " + USER_TABLE + "(" + COLUMN_USER_ID + "));";
@@ -96,7 +97,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    public boolean checkUserExists(String email, String password) {
+    public int checkUserExists(String email, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String[] columns = {COLUMN_USER_ID};
@@ -110,14 +111,86 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (cursorCount > 0) {
             cursor.moveToNext();
-            currentLoggedUserId = cursor.getInt(0);
+            int currentLoggedUserId = cursor.getInt(0);
             cursor.close();
             db.close();
-            return true;
+            return currentLoggedUserId;
         }
 
         cursor.close();
         db.close();
-        return false;
+        return 0;
+    }
+
+    public void addFragrance(Fragrance fragrance) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_FRAGRANCE_USERID, fragrance.getUserId());
+        values.put(COLUMN_FRAGRANCE_NAME, fragrance.getName());
+        values.put(COLUMN_FRAGRANCE_PERFUMER, fragrance.getPerfumer());
+        values.put(COLUMN_FRAGRANCE_RELEASE_YEAR, fragrance.getReleaseYear());
+        values.put(COLUMN_FRAGRANCE_NOTES, fragrance.getNotes());
+        values.put(COLUMN_FRAGRANCE_IMAGE, fragrance.getImage());
+
+        db.insert(FRAGRANCE_TABLE, null, values);
+        db.close();
+    }
+
+    public ArrayList<Fragrance> getAllFragrances(int userId) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        String selection = COLUMN_FRAGRANCE_USERID + " =?";
+        String loggedUserId = userId + "";
+        String[] selectionArgs = {loggedUserId};
+
+        Cursor cursor = db.query(FRAGRANCE_TABLE, null, selection, selectionArgs, null, null, null);
+        ArrayList<Fragrance> fragrances = new ArrayList<Fragrance>();
+        Fragrance fragrance;
+        if (cursor.getCount() > 0) {
+            for (int i = 0; i < cursor.getCount(); i++) {
+                cursor.moveToNext();
+                fragrance = new Fragrance();
+                fragrance.setFragranceId(cursor.getInt(0));
+                fragrance.setUserId(cursor.getInt(1));
+                fragrance.setName(cursor.getString(2));
+                fragrance.setPerfumer(cursor.getString(3));
+                fragrance.setReleaseYear(cursor.getInt(4));
+                fragrance.setNotes(cursor.getString(5));
+                fragrance.setImage(cursor.getBlob(6));
+                fragrances.add(fragrance);
+            }
+        }
+        cursor.close();
+        db.close();
+        return fragrances;
+    }
+
+    public void updateFragrance(Fragrance fragrance) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_FRAGRANCE_ID, fragrance.getFragranceId());
+        values.put(COLUMN_FRAGRANCE_USERID, fragrance.getUserId());
+        values.put(COLUMN_FRAGRANCE_NAME, fragrance.getName());
+        values.put(COLUMN_FRAGRANCE_PERFUMER, fragrance.getPerfumer());
+        values.put(COLUMN_FRAGRANCE_RELEASE_YEAR, fragrance.getReleaseYear());
+        values.put(COLUMN_FRAGRANCE_NOTES, fragrance.getNotes());
+        values.put(COLUMN_FRAGRANCE_IMAGE, fragrance.getImage());
+
+        db.update(FRAGRANCE_TABLE, values, "fragrance_id = ?",
+                new String[]{String.valueOf(fragrance.getFragranceId())});
+        db.close();
+
+    }
+
+    public void deleteFragrance(Fragrance fragrance) {
+        SQLiteDatabase db = getWritableDatabase();
+        String queryString = "DELETE FROM " + FRAGRANCE_TABLE + " WHERE " + COLUMN_FRAGRANCE_ID + " = "
+             + fragrance.getFragranceId();
+        Cursor cursor = db.rawQuery(queryString, null);
+        cursor.moveToFirst();
+        cursor.close();
+        db.close();
     }
 }

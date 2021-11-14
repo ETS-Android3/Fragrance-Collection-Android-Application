@@ -8,6 +8,8 @@
     <string name="hint_release_year">Release Year</string>
     <string name="hint_notes">Notes</string>
     <string name="add_fragrance">Add Fragrance</string>
+    <string name="edit_fragrance">Edit Fragrance</string>
+    <string name="choose_fragrance_image">Choose Image</string>
     <string name="text_login">Login</string>
     <string name="text_register">Register</string>
     <string name="error_message_name">Enter Full Name</string>
@@ -20,7 +22,7 @@
     <string name="error_password_match">Password Does Not Match</string>
     <string name="error_valid_email_password">Wrong Email or Password</string>
     <string name="title_activity_fragrance_list">FragranceListActivity</string>
-    <string name="nav_home">Home</string>
+    <string name="nav_fragrance_list">View All</string>
     <string name="nav_add">Add</string>
     <string name="nav_account">Account</string>
 </resources>

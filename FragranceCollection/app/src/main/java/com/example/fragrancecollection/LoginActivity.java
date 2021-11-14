@@ -49,8 +49,13 @@ public class LoginActivity extends AppCompatActivity {
                 if (passwordValue.isEmpty())
                     loginPasswordEditText.setError("Enter a password");
 
-                if (databaseHelper.checkUserExists(emailValue, passwordValue))
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                if (databaseHelper.checkUserExists(emailValue, passwordValue) > 0) {
+                    Intent toMainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                    toMainIntent.putExtra("email", emailValue);
+                    toMainIntent.putExtra("password", passwordValue);
+                    startActivity(toMainIntent);
+
+                }
 
                 else
                     Snackbar.make(loginScrollView, getString(R.string.error_valid_email_password), Snackbar.LENGTH_LONG).show();

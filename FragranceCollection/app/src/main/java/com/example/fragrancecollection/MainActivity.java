@@ -4,22 +4,28 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
+
+    static Context context;
+    static String currentLoggedUserEmail;
+    static String currentLoggedUserPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new HomeFragment()).commit();
+        context = MainActivity.this;
+        currentLoggedUserEmail = getIntent().getExtras().getString("email");
+        currentLoggedUserPassword = getIntent().getExtras().getString("password");
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragranceListFragment()).commit();
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
 
         bottomNav.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
@@ -27,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment selectedFragment = null;
                 switch(item.getItemId()) {
-                    case R.id.navigation_home:
-                        selectedFragment = new HomeFragment();
+                    case R.id.navigation_fragrance_list:
+                        selectedFragment = new FragranceListFragment();
                         break;
                     case R.id.navigation_add:
                         selectedFragment = new AddFragranceFragment();
