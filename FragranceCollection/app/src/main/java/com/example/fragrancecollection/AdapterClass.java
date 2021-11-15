@@ -65,7 +65,7 @@ public class AdapterClass extends RecyclerView.Adapter<AdapterClass.ViewHolder>{
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.context, R.style.AlertDialogCustom);
                 builder.setIcon(R.drawable.ic_baseline_delete_24)
                         .setTitle("Delete Fragrance")
-                        .setMessage("Are you sure you want to delete " + fragrance.getName())
+                        .setMessage("Are you sure you want to delete " + fragrance.getName() + "?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {

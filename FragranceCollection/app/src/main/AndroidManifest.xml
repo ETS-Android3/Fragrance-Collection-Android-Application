@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FragranceCollection">
         <activity
+            android:name=".EditUserActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ConfirmPasswordActivity"
+            android:exported="true" />
+        <activity
             android:name=".EditFragranceActivity"
             android:exported="true" />
         <activity

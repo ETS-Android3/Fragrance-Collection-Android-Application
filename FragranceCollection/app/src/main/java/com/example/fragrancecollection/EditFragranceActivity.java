@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -81,8 +82,37 @@ public class EditFragranceActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String nameValue = nameEditText.getText().toString().trim();
                 String perfumerValue = perfumerEditText.getText().toString().trim();
-                int releaseYearValue = Integer.parseInt(releaseYearEditText.getText().toString().trim());
+                int releaseYearValue = 0;
+                if (!releaseYearEditText.getText().toString().isEmpty()) {
+                    releaseYearValue = Integer.parseInt(releaseYearEditText.getText().toString().trim());
+                }
                 String notesValue = notesEditText.getText().toString().trim();
+                boolean formIsValid = true;
+
+                if (nameValue.isEmpty()) {
+                    nameEditText.setError("Enter a valid name");
+                    formIsValid = false;
+                }
+
+                if (perfumerValue.isEmpty()) {
+                    perfumerEditText.setError("Enter a perfumer");
+                    formIsValid = false;
+                }
+
+                if (releaseYearEditText.getText().toString().isEmpty()) {
+                    releaseYearEditText.setError("Enter a release year");
+                    formIsValid = false;
+                }
+
+                if (notesValue.isEmpty()) {
+                    notesEditText.setError("Enter notes");
+                    formIsValid = false;
+                }
+
+
+                if (!formIsValid)
+                    return;
+
 
                 try {
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -97,6 +127,7 @@ public class EditFragranceActivity extends AppCompatActivity {
                 Intent toMainIntent = new Intent(EditFragranceActivity.this, MainActivity.class);
                 toMainIntent.putExtra("email", currentLoggedUserEmail);
                 toMainIntent.putExtra("password", currentLoggedUserPassword);
+                toMainIntent.putExtra("source", "editFragranceActivity");
                 EditFragranceActivity.this.startActivity(toMainIntent);
 
             }

@@ -122,6 +122,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return 0;
     }
 
+    public User getUser(String email) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        String selection = COLUMN_USER_EMAIL + " =?";
+        String[] selectionArgs = {email};
+
+        Cursor cursor = db.query(USER_TABLE, null, selection, selectionArgs,
+                null, null ,null);
+
+        User user = new User();
+        if (cursor.getCount() > 0) {
+            cursor.moveToNext();
+            user.setUserId(cursor.getInt(0));
+            user.setName(cursor.getString(1));
+            user.setEmail(cursor.getString(2));
+            user.setPassword(cursor.getString(3));
+        }
+
+        cursor.close();
+        db.close();
+        return user;
+    }
+
+    public void updateUser(User user) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USER_ID, user.getUserId());
+        values.put(COLUMN_USER_NAME, user.getName());
+        values.put(COLUMN_USER_EMAIL, user.getEmail());
+        values.put(COLUMN_USER_PASSWORD, user.getPassword());
+
+        db.update(USER_TABLE, values, COLUMN_USER_ID + " =?", new String[] {String.valueOf(user.getUserId())});
+        db.close();
+    }
+
     public void addFragrance(Fragrance fragrance) {
         SQLiteDatabase db = getWritableDatabase();
 

@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditFragranceActivity"
     android:background="@color/colorBackground"
     android:paddingBottom="20dp"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
-    android:paddingTop="20dp">
+    android:paddingTop="20dp"
+    tools:context=".EditUserActivity">
 
     <ScrollView
-        android:id="@+id/editFragranceScrollView"
+        android:id="@+id/editUserScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -22,93 +22,68 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/editFragranceTextView"
+                android:id="@+id/editUserTitleTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/edit_fragrance"
                 android:textSize="40sp"
-                android:textStyle="bold" />
+                android:text="@string/edit_account" />
 
             <EditText
-                android:id="@+id/editFragranceNameEditText"
+                android:id="@+id/editUserNameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:ems="10"
                 android:hint="@string/hint_name"
-                android:inputType="text"
+                android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:minHeight="48dp"
                 android:textColor="@android:color/white" />
 
             <EditText
-                android:id="@+id/editFragrancePerfumerEditText"
+                android:id="@+id/editUserEmailEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:ems="10"
-                android:hint="@string/hint_perfumer"
-                android:inputType="text"
+                android:hint="@string/hint_email"
+                android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:minHeight="48dp"
                 android:textColor="@android:color/white" />
 
             <EditText
-                android:id="@+id/editFragranceReleaseYearEditText"
+                android:id="@+id/editUserPasswordEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:ems="10"
-                android:hint="@string/hint_release_year"
-                android:inputType="number"
-                android:maxLines="1"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword"
                 android:minHeight="48dp"
+                android:maxLines="1"
                 android:textColor="@android:color/white" />
 
             <EditText
-                android:id="@+id/editFragranceNotesEditText"
+                android:id="@+id/editUserConfirmPasswordEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:ems="10"
-                android:hint="@string/hint_notes"
-                android:inputType="text"
+                android:hint="@string/hint_confirm_password"
+                android:inputType="textPassword"
                 android:maxLines="1"
                 android:minHeight="48dp"
                 android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/editFragranceChooseImageTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:text="@string/choose_fragrance_image" />
-
-            <ImageButton
-                android:id="@+id/editFragranceChooseImageButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_baseline_image_24" />
 
             <Button
-                android:id="@+id/editFragranceButton"
+                android:id="@+id/editUserButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:background="@color/colorPrimary"
-                android:text="@string/edit_fragrance" />
-
-            <ImageView
-                android:id="@+id/editFragranceChosenImageView"
-                android:layout_width="300dp"
-                android:layout_height="350dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:alpha="0"
-                app:srcCompat="@drawable/ic_baseline_account_circle_24" />
+                android:text="@string/save_account" />
 
         </LinearLayout>
     </ScrollView>

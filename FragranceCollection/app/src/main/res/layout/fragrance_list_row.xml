@@ -11,18 +11,21 @@
         android:id="@+id/fragranceListNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:layout_weight="1"
-        android:textSize="26sp"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textSize="32sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
         android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -30,7 +33,8 @@
                 android:id="@+id/fragranceListPerfumerLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:textSize="20sp"
+                android:text="@string/hint_perfumer" />
 
             <TextView
                 android:id="@+id/fragranceListPerfumerTextView"
@@ -42,7 +46,9 @@
                 android:id="@+id/fragranceListReleaseYearLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:layout_marginTop="20dp"
+                android:textSize="20sp"
+                android:text="@string/hint_release_year" />
 
             <TextView
                 android:id="@+id/fragranceListReleaseYearTextView"
@@ -54,7 +60,9 @@
                 android:id="@+id/fragranceListNotesLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:layout_marginTop="20dp"
+                android:textSize="20sp"
+                android:text="@string/hint_notes" />
 
             <TextView
                 android:id="@+id/fragranceListNotesTextView"
@@ -66,8 +74,10 @@
         <ImageView
             android:id="@+id/fragranceListImageView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="225dp"
             android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
             app:srcCompat="@drawable/ic_baseline_account_circle_24" />
 
     </LinearLayout>
@@ -75,6 +85,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -82,6 +93,7 @@
             android:id="@+id/fragranceListEditButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
             android:layout_weight="1"
             android:text="Button" />
 
@@ -89,6 +101,7 @@
             android:id="@+id/fragranceListDeleteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/colorDanger"
             android:layout_weight="1"
             android:text="Button" />
     </LinearLayout>

@@ -22,10 +22,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         context = MainActivity.this;
+
+        String intentSourceActivity = getIntent().getExtras().getString("source");
         currentLoggedUserEmail = getIntent().getExtras().getString("email");
         currentLoggedUserPassword = getIntent().getExtras().getString("password");
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragranceListFragment()).commit();
+        if (intentSourceActivity.equals("editUserActivity")) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new AccountFragment()).commit();
+        }
+
+        else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragranceListFragment()).commit();
+        }
+
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
 
         bottomNav.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
