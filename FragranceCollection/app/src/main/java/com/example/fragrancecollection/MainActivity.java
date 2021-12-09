@@ -51,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.navigation_account:
                         selectedFragment = new AccountFragment();
                         break;
+                    case R.id.navigation_discover:
+                        selectedFragment = new UserListFragment();
+                        break;
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, selectedFragment).commit();
 

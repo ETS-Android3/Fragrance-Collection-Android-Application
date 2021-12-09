@@ -16,6 +16,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "FragranceCollectionDb";
     private static final String USER_TABLE = "user";
     private static final String FRAGRANCE_TABLE = "fragrance";
+    private static final String LIKE_TABLE = "fragranceLike";
 
     private static final String COLUMN_USER_ID = "user_id";
     private static final String COLUMN_USER_NAME = "name";
@@ -28,6 +29,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_FRAGRANCE_RELEASE_YEAR = "release_year";
     private static final String COLUMN_FRAGRANCE_NOTES = "notes";
     private static final String COLUMN_FRAGRANCE_IMAGE = "image";
+    private static final String COLUMN_LIKE_ID = "like_id";
+    private static final String COLUMN_LIKE_USERID = "user_id";
+    private static final String COLUMN_LIKE_FRAGRANCEID = "fragrance_id";
 
 
 
@@ -47,6 +51,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             COLUMN_FRAGRANCE_IMAGE + " BLOB, " +
             "FOREIGN KEY(" + COLUMN_FRAGRANCE_USERID + ") REFERENCES " + USER_TABLE + "(" + COLUMN_USER_ID + "));";
 
+    private static final String CREATE_LIKE_TABLE = "CREATE TABLE " + LIKE_TABLE + "(" +
+            COLUMN_LIKE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            COLUMN_LIKE_USERID + " INTEGER," +
+            COLUMN_LIKE_FRAGRANCEID + " INTEGER," +
+            "FOREIGN KEY(" + COLUMN_LIKE_USERID + ") REFERENCES " + USER_TABLE + "(" + COLUMN_USER_ID + ")," +
+            "FOREIGN KEY(" + COLUMN_FRAGRANCE_ID + ") REFERENCES " + FRAGRANCE_TABLE + "(" + COLUMN_FRAGRANCE_ID + ")," +
+            "UNIQUE (" + COLUMN_LIKE_USERID + "," + COLUMN_LIKE_FRAGRANCEID + "));";
+
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -55,12 +67,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(CREATE_USER_TABLE);
         sqLiteDatabase.execSQL(CREATE_FRAGRANCE_TABLE);
+        sqLiteDatabase.execSQL(CREATE_LIKE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + FRAGRANCE_TABLE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + USER_TABLE);
+        //sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + LIKE_TABLE);
 
         onCreate(sqLiteDatabase);
     }
@@ -143,6 +157,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return user;
+    }
+
+    public ArrayList<User> getAllUsers(int currentLoggedUserId) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        String queryString = "SELECT * FROM " + USER_TABLE + " WHERE " + COLUMN_USER_ID + " != " + currentLoggedUserId;
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        ArrayList<User> users = new ArrayList<User>();
+        User user;
+        if (cursor.getCount() > 0) {
+            for(int i = 0; i < cursor.getCount(); i++) {
+                cursor.moveToNext();
+                user = new User();
+                user.setUserId(cursor.getInt(0));
+                user.setName(cursor.getString(1));
+                user.setEmail(cursor.getString(2));
+                user.setPassword(cursor.getString(3));
+                users.add(user);
+            }
+        }
+        cursor.close();
+        db.close();
+        return users;
     }
 
     public void updateUser(User user) {
@@ -228,5 +266,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
         cursor.close();
         db.close();
+    }
+
+    public void addLike(int userId, int fragranceId) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_LIKE_USERID, userId);
+        values.put(COLUMN_LIKE_FRAGRANCEID, fragranceId);
+
+        db.insert(LIKE_TABLE, null, values);
+        db.close();
+    }
+
+    public void deleteLike(int userId, int fragranceId) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        String queryString = "DELETE FROM " + LIKE_TABLE + " WHERE " + COLUMN_LIKE_USERID + "=" + userId +
+                " AND " + COLUMN_LIKE_FRAGRANCEID + "=" + fragranceId;
+
+        Cursor cursor = db.rawQuery(queryString, null);
+        cursor.moveToFirst();
+        cursor.close();
+        db.close();
+    }
+
+    public boolean checkIfLikedAlready(int userId, int fragranceId) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        String queryString = "SELECT " + COLUMN_LIKE_USERID + " FROM " + LIKE_TABLE +
+                " WHERE " + COLUMN_LIKE_USERID + "=" + userId +
+                " AND " + COLUMN_LIKE_FRAGRANCEID + "=" + fragranceId;
+
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        return cursor.getCount() > 0;
     }
 }

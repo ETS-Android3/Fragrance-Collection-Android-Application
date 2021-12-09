@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FragranceCollection">
         <activity
+            android:name=".VisitProfileActivity"
+            android:exported="true" />
+        <activity
             android:name=".EditUserActivity"
             android:exported="true" />
         <activity
