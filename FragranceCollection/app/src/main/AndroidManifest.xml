@@ -12,25 +12,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FragranceCollection">
         <activity
-            android:name=".VisitProfileActivity"
+            android:name=".activitiesandfragments.VisitProfileActivity"
             android:exported="true" />
         <activity
-            android:name=".EditUserActivity"
+            android:name=".activitiesandfragments.EditUserActivity"
             android:exported="true" />
         <activity
-            android:name=".ConfirmPasswordActivity"
+            android:name=".activitiesandfragments.ConfirmPasswordActivity"
             android:exported="true" />
         <activity
-            android:name=".EditFragranceActivity"
+            android:name=".activitiesandfragments.EditFragranceActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activitiesandfragments.MainActivity"
             android:exported="true" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".activitiesandfragments.RegisterActivity"
             android:exported="true" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activitiesandfragments.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

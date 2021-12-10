@@ -9,7 +9,7 @@
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
     android:paddingTop="20dp"
-    tools:context=".EditUserActivity">
+    tools:context=".activitiesandfragments.EditUserActivity">
 
     <ScrollView
         android:id="@+id/editUserScrollView"

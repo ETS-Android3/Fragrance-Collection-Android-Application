@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.fragrancecollection.models.Fragrance;
+import com.example.fragrancecollection.models.User;
+
 import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -65,7 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("PRAGMA foreign_keys = ON");
+        //sqLiteDatabase.execSQL("PRAGMA foreign_keys = ON");
         sqLiteDatabase.execSQL(CREATE_USER_TABLE);
         sqLiteDatabase.execSQL(CREATE_FRAGRANCE_TABLE);
         sqLiteDatabase.execSQL(CREATE_LIKE_TABLE);
@@ -76,7 +79,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + FRAGRANCE_TABLE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + USER_TABLE);
-        //sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + LIKE_TABLE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + LIKE_TABLE);
 
         onCreate(sqLiteDatabase);
     }
