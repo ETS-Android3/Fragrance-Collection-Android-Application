@@ -56,7 +56,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             COLUMN_LIKE_USERID + " INTEGER," +
             COLUMN_LIKE_FRAGRANCEID + " INTEGER," +
             "FOREIGN KEY(" + COLUMN_LIKE_USERID + ") REFERENCES " + USER_TABLE + "(" + COLUMN_USER_ID + ")," +
-            "FOREIGN KEY(" + COLUMN_FRAGRANCE_ID + ") REFERENCES " + FRAGRANCE_TABLE + "(" + COLUMN_FRAGRANCE_ID + ")," +
+            "FOREIGN KEY(" + COLUMN_FRAGRANCE_ID + ") REFERENCES " + FRAGRANCE_TABLE + "(" + COLUMN_FRAGRANCE_ID + ") ON DELETE CASCADE," +
             "UNIQUE (" + COLUMN_LIKE_USERID + "," + COLUMN_LIKE_FRAGRANCEID + "));";
 
     public DatabaseHelper(@Nullable Context context) {
@@ -65,9 +65,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        sqLiteDatabase.execSQL("PRAGMA foreign_keys = ON");
         sqLiteDatabase.execSQL(CREATE_USER_TABLE);
         sqLiteDatabase.execSQL(CREATE_FRAGRANCE_TABLE);
         sqLiteDatabase.execSQL(CREATE_LIKE_TABLE);
+
     }
 
     @Override
@@ -301,5 +303,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(queryString, null);
 
         return cursor.getCount() > 0;
+    }
+
+    public int getLikeCount(int fragranceId) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        String queryString = "SELECT " + COLUMN_LIKE_ID + " FROM " + LIKE_TABLE +
+                " WHERE " + COLUMN_LIKE_FRAGRANCEID + "=" + fragranceId;
+
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        return cursor.getCount();
     }
 }

@@ -22,6 +22,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class AdapterClass extends RecyclerView.Adapter<AdapterClass.ViewHolder>{
@@ -45,6 +47,9 @@ public class AdapterClass extends RecyclerView.Adapter<AdapterClass.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Fragrance fragrance = fragrances.get(position);
+        DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.context);
+
+        int likesCount = databaseHelper.getLikeCount(fragrance.getFragranceId());
 
         byte[] image = fragrance.getImage();
         Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
@@ -53,6 +58,7 @@ public class AdapterClass extends RecyclerView.Adapter<AdapterClass.ViewHolder>{
         holder.perfumerTextView.setText(fragrance.getPerfumer());
         holder.releaseYearTextView.setText(String.valueOf(fragrance.getReleaseYear()));
         holder.notesTextView.setText(fragrance.getNotes());
+        holder.likesTextView.setText("Likes: " + likesCount);
         holder.imageView.setImageBitmap(bitmap);
         holder.editButton.setText("Edit");
         holder.deleteButton.setText("Delete");
@@ -60,7 +66,6 @@ public class AdapterClass extends RecyclerView.Adapter<AdapterClass.ViewHolder>{
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.context);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.context, R.style.AlertDialogCustom);
                 builder.setIcon(R.drawable.ic_baseline_delete_24)
@@ -115,6 +120,7 @@ public class AdapterClass extends RecyclerView.Adapter<AdapterClass.ViewHolder>{
         public TextView perfumerTextView;
         public TextView releaseYearTextView;
         public TextView notesTextView;
+        public TextView likesTextView;
         public ImageView imageView;
         public Button editButton;
         public Button deleteButton;
@@ -127,6 +133,7 @@ public class AdapterClass extends RecyclerView.Adapter<AdapterClass.ViewHolder>{
             perfumerTextView = itemView.findViewById(R.id.fragranceListPerfumerTextView);
             releaseYearTextView = itemView.findViewById(R.id.fragranceListReleaseYearTextView);
             notesTextView = itemView.findViewById(R.id.fragranceListNotesTextView);
+            likesTextView = itemView.findViewById(R.id.fragranceListLikesTextView);
             imageView = itemView.findViewById(R.id.fragranceListImageView);
             editButton = itemView.findViewById(R.id.fragranceListEditButton);
             deleteButton = itemView.findViewById(R.id.fragranceListDeleteButton);
